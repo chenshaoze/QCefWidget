@@ -53,6 +53,7 @@ class QCefBrowserHandler : public CefClient,
                            public CefResourceRequestHandler,
 #endif
                            //public CefResourceHandler,
+                           public CefFocusHandler,
                            public CefRenderHandler {
  public:
   QCefBrowserHandler(QCefWidgetImpl* pImpl);
@@ -91,6 +92,9 @@ class QCefBrowserHandler : public CefClient,
   }
   virtual CefRefPtr<CefRequestHandler> GetRequestHandler() override {
     return this;
+  }
+  virtual CefRefPtr<CefFocusHandler> GetFocusHandler() override { 
+    return this; 
   }
   virtual CefRefPtr<CefRenderHandler> GetRenderHandler() override {
     return this;
@@ -315,6 +319,11 @@ class QCefBrowserHandler : public CefClient,
                            bool& allow_os_execution) override;
 #endif
 #pragma endregion CefRequestHandler
+
+#pragma region CefFocusHandler
+  // CefFocusHandler methods
+  virtual void OnGotFocus(CefRefPtr<CefBrowser> browser) override;
+#pragma endregion CefFocusHandler
 
 #pragma region CefRenderHandler
   bool GetRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& rect) OVERRIDE;

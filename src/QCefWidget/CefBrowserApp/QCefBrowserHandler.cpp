@@ -667,6 +667,15 @@ void QCefBrowserHandler::OnProtocolExecution(CefRefPtr<CefBrowser> browser,
 
 #endif
 
+void QCefBrowserHandler::OnGotFocus(CefRefPtr<CefBrowser> browser) {
+  CEF_REQUIRE_UI_THREAD();
+
+  auto host = browser->GetHost();
+  if (host != nullptr) {
+    host->SetFocus(true);
+  }
+}
+
 bool QCefBrowserHandler::GetRootScreenRect(CefRefPtr<CefBrowser> browser,
                                            CefRect& rect) {
   CEF_REQUIRE_UI_THREAD();
